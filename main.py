@@ -20,6 +20,34 @@ HELP = """Раздел помощи:
 ..."""
 
 
+# функции
+def read_ini() -> bool:
+    """Читает конфигурационные файлы, сохраняет прочитанные данные в глобальные переменные статистики и сохранений и возвращает True если приложение запущено впервые, иначе False."""
+    # players.ini -> STATS
+    # saves.ini -> SAVES
+    # if not players.ini:
+    #     return True
+    # else:
+    #     return False
+
+
+def show_help() -> None:
+    """Выводит в stdout раздел помощи."""
+    print(HELP)
+
+
+def get_player_name() -> None:
+    """Запрашивает имя игрока и проверяет присутствие этого имени в глобальной переменной статистики, добавляет имя в глобальную переменную текущих игроков."""
+    # stdin -> name
+    # if name not in STATS:
+    #     new_player(name)
+    # name -> PLAYERS
+
+
+def new_player(player_name: str) -> None:
+    """Создаёт запись о новом игроке в глобальной переменной статистики."""
+
+
 # суперцикл
 while True:
     command = input(' > ').lower()
