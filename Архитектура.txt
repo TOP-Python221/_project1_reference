@@ -35,7 +35,7 @@
 
         [player1,player2]
         X = player1
-        turns =  # TODO: дописать структуру хранения данных о ходах в сохранённой партии
+        turns = XOOXX--O-
 
         [player3,player2]
         ...
@@ -55,10 +55,10 @@
     # Сохранённые незаконченные партии
 
          {frozenset({'player1', 'player2'}):
-                   {'turns': <turns>, 'X': 'player1'},
+                   {'turns': 'XOOXX--O-', 'X': 'player1'},
 
           frozenset({'player3', 'player2'}):
-                   {'turns': <turns>, 'X': 'player2'},
+                   {'turns': '-X-OO-OXX', 'X': 'player2'},
 
           ...}
 
