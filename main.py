@@ -13,6 +13,9 @@ SAVES_INI_PATH = SCRIPT_DIR / "saves.ini"
 STATS = {}
 SAVES = {}
 
+DIM = 3
+
+BOARD = [[' ']*DIM for _ in range(DIM)]
 PLAYERS = ()
 
 HELP = """Раздел помощи:
@@ -62,10 +65,31 @@ get_player_name()
 
 # суперцикл
 while True:
+    # 4. Ожидание ввода пользовательских команд
     command = input(' > ').lower()
+
     if command in ('quit', 'exit', 'q', 'e'):
         break
+
     elif command in ('new', 'n'):
-        # начало партии
-        pass
-    # elif ...
+        # 5. Запрос режима игры
+        #    6. Запрос символа для игры
+        game_mode()
+        # 8. Партия
+        #    7. ЕСЛИ первая партия для любого из игроков
+        result = game()
+        if result is None:
+            # 9. ЕСЛИ партия закончена досрочно:
+            #         сохранение данных о партии
+            save_game()
+        else:
+            # 10. Внесение изменений в статистику игрока(-ов)
+            update_stats(result)
+
+    elif command in ('load', 'l'):
+        if flag := load():
+            game(flag)
+        else:
+            print('no saved games for you')
+
+    # elif ... прочие команды
