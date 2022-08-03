@@ -24,8 +24,7 @@
     players.ini
 
         [player 1]
-        hash = s098123j1nkf47evp9
-        first_time = True
+        training = True
         stats = 1,0,1
 
         [player 2]
@@ -44,10 +43,10 @@
 
     # Имена игроков, статистика игроков
 
-        {'player1': {'first_time': True,
+        {'player1': {'training': True,
                      'stats': {'wins': 0, 'ties': 0, 'fails': 0}},
 
-         'player2': {'first_time': False,
+         'player2': {'training': False,
                      'stats': {'wins': 3, 'ties': 2, 'fails': 0}},
 
          ...}
