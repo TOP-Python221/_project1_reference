@@ -6,6 +6,14 @@ import gameset
 # глобальные переменные модуля game
 BOARD = [[' '] * gameset.DIM for _ in range(gameset.DIM)]
 
+# переменные типов для аннотации
+Row = list[str] | tuple[str, ...]
+Matrix = tuple[Row, ...] | list[Row]
+
+
+def print_board(board: Matrix, *boards, right: bool = False) -> None:
+    """Выводит в stdout игровое поле с ходами либо другими символами."""
+
 
 def human_turn():
     """Запрос координат ячейки поля для текущего хода."""
