@@ -43,10 +43,22 @@ while True:
             game.update_stats(result)
 
     elif command in ('load', 'l'):
-        if flag := commands.load():
-            game.game(flag)
-            # убрать доигранную партию из SAVES
-        else:
+        try:
+            # 5. Проверка наличия сохранённых партий для текущего игрока
+            #    6. Запрос партии для загрузки
+            # 7. Партия
+            result = game.game(commands.load())
+            if result is None:
+                # 8. ЕСЛИ партия закончена досрочно:
+                #         сохранение данных о партии
+                game.save_game()
+            else:
+                # 9. Внесение изменений в статистику игрока(-ов)
+                game.update_stats(result)
+                # 10. Удаление данных о доигранной сохранённой партии
+                # ...
+
+        except LookupError:
             print('no saved games for you')
 
     # elif ... прочие команды
