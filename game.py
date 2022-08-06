@@ -2,11 +2,12 @@
 
 from shutil import get_terminal_size as gts
 
+import config
 import gameset
 
 
 # глобальные переменные модуля game
-BOARD = [[' '] * gameset.DIM for _ in range(gameset.DIM)]
+BOARD = [[''] * gameset.DIM for _ in range(gameset.DIM)]
 
 # переменные типов для аннотации
 Row = list[str] | tuple[str, ...]
@@ -39,7 +40,7 @@ def human_turn():
 def game(zero_turn=False) -> tuple[dict, dict] | None:
     """Обрабатывает игровой процесс."""
     # training = is_first_game()
-    # for name in PLAYERS:
+    # for name in gameset.PLAYERS:
     #     if zero_turn:
     #         continue
     #     if name.startswith('bot'):
@@ -60,9 +61,9 @@ def game(zero_turn=False) -> tuple[dict, dict] | None:
 def update_stats(score: tuple[dict, dict]) -> None:
     """Обновляет глобальную переменную статистики в соответствии с результатом завершённой партии."""
     # for i in range(2):
-    #     score[i] -> STATS[PLAYERS[i]]
+    #     score[i] -> config.STATS[gameset.PLAYERS[i]]
 
 
 def save_game() -> None:
     """Обновляет глобальную переменную сохранений в соответствии с текущим состоянием глобальных переменных текущих игроков и сделанных ходов."""
-    # PLAYERS, BOARD -> SAVES
+    # gameset.PLAYERS, BOARD -> config.SAVES
