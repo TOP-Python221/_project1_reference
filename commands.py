@@ -27,3 +27,8 @@ def load() -> bool:
     # else:
     #     return True
 
+
+def change_dimension() -> None:
+    """Запрашивает у пользователя новую размерность игрового поля и пересчитывает соответствующий диапазон."""
+    # stdin -> gameset.DIM
+    # gameset.DIM -> gameset.RANGE
