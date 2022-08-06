@@ -12,6 +12,9 @@ BOT_NAME_HARD = 'bot2'
 WEIGHT_OWN = 1.5
 WEIGHT_FOE = 1
 
+SM_FROM_CENTER = []
+SM_FROM_CORNERS = []
+
 
 def bot_turn() -> config.TurnCoords:
     """Возвращает координаты ячейки поля для текущего хода бота в зависимости от сложности."""
@@ -118,4 +121,21 @@ def calc_strategy_matrices() -> None:
     """Вычисляет и заполняет начальные матрицы принятия решений для стратегий 'крестика' и 'нолика'.
 
     ВНИМАНИЕ: вычисляет корректные матрицы только для нечётных значений размерности игрового поля (gameset.DIM)."""
+    global SM_FROM_CENTER, SM_FROM_CORNERS
+    SM_FROM_CENTER = [[0] * gameset.DIM for _ in range(gameset.DIM)]
+    from_center_weights = (tuple(range(gameset.DIM // 2, 0, -1))
+                           + (gameset.DIM // 2 + 1,)
+                           + tuple(range(1, gameset.DIM // 2 + 1)))
+    for i in range(gameset.DIM):
+        SM_FROM_CENTER[i][i] = from_center_weights[i]
+        SM_FROM_CENTER[i][gameset.DIM - i - 1] = from_center_weights[i]
+
+    SM_FROM_CORNERS = [[0] * gameset.DIM for _ in range(gameset.DIM)]
+    from_corners_weights = (tuple(range(gameset.DIM // 2 + 1, 1, -1))
+                            + tuple(range(1, gameset.DIM // 2 + 2)))
+    for j in (0, gameset.DIM-1):
+        SM_FROM_CORNERS[j] = list(from_corners_weights)
+        SM_FROM_CORNERS[j] = list(from_corners_weights)
+        for i in range(gameset.DIM):
+            SM_FROM_CORNERS[i][j] = from_corners_weights[i]
 
