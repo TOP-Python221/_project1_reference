@@ -1,6 +1,7 @@
 """Дополнительный модуль: искусственный интеллект."""
 
 import config
+import gameset
 
 
 # глобальные переменные модуля ai
@@ -22,26 +23,48 @@ def hard_mode(token_index: int) -> config.TurnCoords:
 
 def cells_row(matrix: config.Matrix, row_index: int) -> tuple:
     """Возвращает кортеж с элементами ряда матрицы по индексу ряда."""
+    return tuple(matrix[row_index])
 
 
 def cells_column(matrix: config.Matrix, column_index: int) -> tuple:
     """Возвращает кортеж с элементами столбца матрицы по индексу столбца."""
+    return tuple(matrix[i][column_index] for i in range(gameset.DIM))
 
 
 def cells_maindiagonal(matrix: config.Matrix, row_index: int, column_index: int) -> tuple:
     """Возвращает кортеж с элементами главной диагонали матрицы по индексам ряда и столбца."""
+    if row_index == column_index:
+        return tuple(matrix[i][i] for i in range(gameset.DIM))
+    else:
+        return tuple()
 
 
 def cells_antidiagonal(matrix: config.Matrix, row_index: int, column_index: int) -> tuple:
     """Возвращает кортеж с элементами побочной диагонали матрицы по индексам ряда и столбца."""
+    if row_index == gameset.DIM - column_index - 1:
+        return tuple(matrix[i][gameset.DIM - i - 1] for i in range(gameset.DIM))
+    else:
+        return tuple()
 
 
 def sum_matrix(*matrices: config.Matrix) -> config.Matrix:
     """Поэлементно складывает переданные матрицы и возвращает результирующую матрицу."""
+    result_matrix = []
+    for i in range(gameset.DIM):
+        result_matrix += [[]]
+        for j in range(gameset.DIM):
+            result_matrix[i] += [sum(matrix[i][j] for matrix in matrices)]
+    return result_matrix
 
 
 def indexes_matrix_max(matrix: config.Matrix) -> config.TurnCoords:
     """Находит наибольший элемент в матрице и возвращает индексы этого элемента в виде кортежа."""
+    mx, coords = 0, ()
+    for i in range(gameset.DIM):
+        for j in range(gameset.DIM):
+            if mx < matrix[i][j]:
+                mx, coords = matrix[i][j], (i, j)
+    return coords
 
 
 def weights_tokens(board: config.Matrix, token_index: int) -> config.Matrix:
