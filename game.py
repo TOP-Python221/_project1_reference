@@ -4,6 +4,7 @@ from shutil import get_terminal_size as gts
 
 import config
 import gameset
+import ai
 
 
 # глобальные переменные модуля game
@@ -35,14 +36,15 @@ def human_turn():
 
 def game(zero_turn=False) -> config.Score | None:
     """Обрабатывает игровой процесс."""
+    # ai.calc_strategy_matrices()
     # training = is_first_game()
     # for name in gameset.PLAYERS:
     #     if zero_turn:
     #         continue
-    #     if name.startswith('bot'):
+    #     if name in (ai.BOT_NAME_EASY, ai.BOT_NAME_HARD):
     #         if training:
     #             'подсказка' -> stdout
-    #         bot_turn(name[-1]) -> BOARD
+    #         ai.bot_turn() -> BOARD
     #     else:
     #         human_turn() -> inp
     #         if inp:
