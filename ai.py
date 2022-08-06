@@ -18,6 +18,10 @@ SM_FROM_CORNERS = []
 
 def bot_turn() -> config.TurnCoords:
     """Возвращает координаты ячейки поля для текущего хода бота в зависимости от сложности."""
+    if BOT_NAME_EASY in gameset.PLAYERS:
+        return easy_mode()
+    elif BOT_NAME_HARD in gameset.PLAYERS:
+        return hard_mode(gameset.PLAYERS.index(BOT_NAME_HARD))
 
 
 def easy_mode() -> config.TurnCoords:
