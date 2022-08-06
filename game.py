@@ -22,7 +22,7 @@ def print_board(board: config.Matrix, *boards: config.Matrix, right: bool = Fals
     pad = 5
     margin = (1, gts()[0]-1 - sum(width_boards) - pad*(num_of_boards-1))[right]
     value_lines = ()
-    for i in range(gameset.DIM):
+    for i in gameset.RANGE:
         values = ('|'.join(f"{cell!s:^{width_cells[j]}s}" for cell in boards[j][i])
                   for j in range(num_of_boards))
         value_lines += (' '*margin + (' '*pad).join(values), )

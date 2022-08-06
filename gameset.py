@@ -2,8 +2,10 @@
 
 # глобальные переменные модуля gameset
 DIM = 3
+RANGE = range(DIM)
+
 PLAYERS = ()
-SYMBOL = ('X', 'O')
+TOKENS = ('X', 'O')
 
 
 def get_player_name() -> None:
