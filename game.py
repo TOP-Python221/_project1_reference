@@ -14,7 +14,7 @@ def print_board(board: config.Matrix, *boards: config.Matrix, right: bool = Fals
     """Выводит в stdout игровое поле с ходами либо другими символами."""
     boards = (board, ) + boards
     num_of_boards = len(boards)
-    width_cells = tuple(max(max(len(cell) for cell in row) for row in board) + 2
+    width_cells = tuple(max(max(len(str(cell)) for cell in row) for row in board) + 2
                         for board in boards)
     width_boards = tuple(width_cells[i]*gameset.DIM + gameset.DIM - 1
                          for i in range(num_of_boards))
@@ -22,7 +22,7 @@ def print_board(board: config.Matrix, *boards: config.Matrix, right: bool = Fals
     margin = (1, gts()[0]-1 - sum(width_boards) - pad*(num_of_boards-1))[right]
     value_lines = ()
     for i in range(gameset.DIM):
-        values = ('|'.join(f"{cell:^{width_cells[j]}s}" for cell in boards[j][i])
+        values = ('|'.join(f"{cell!s:^{width_cells[j]}s}" for cell in boards[j][i])
                   for j in range(num_of_boards))
         value_lines += (' '*margin + (' '*pad).join(values), )
     horiz_line = ' '*margin + (' '*pad).join('—'*wd for wd in width_boards)
