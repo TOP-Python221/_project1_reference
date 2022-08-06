@@ -2,11 +2,15 @@
 
 import config
 import gameset
+import game
 
 
 # глобальные переменные модуля ai
 BOT_NAME_EASY = 'bot1'
 BOT_NAME_HARD = 'bot2'
+
+WEIGHT_OWN = 1.5
+WEIGHT_FOE = 1
 
 
 def bot_turn() -> config.TurnCoords:
@@ -69,14 +73,45 @@ def indexes_matrix_max(matrix: config.Matrix) -> config.TurnCoords:
 
 def weights_tokens(board: config.Matrix, token_index: int) -> config.Matrix:
     """Конструирует и возвращает матрицу весов занятых ячеек игрового поля."""
+    tokens_weights = [[0]*gameset.DIM for _ in range(gameset.DIM)]
+    for i in range(gameset.DIM):
+        for j in range(gameset.DIM):
+            if board[i][j] == gameset.TOKENS[token_index]:
+                tokens_weights[i][j] = WEIGHT_OWN
+            elif board[i][j] == gameset.TOKENS[1 - token_index]:
+                tokens_weights[i][j] = WEIGHT_FOE
+    return tokens_weights
 
 
 def weights_empty(tokens_weights: config.Matrix) -> config.Matrix:
     """Вычисляет и возвращает матрицу весов пустых ячеек игрового поля."""
+    empty_weights = [[0]*gameset.DIM for _ in range(gameset.DIM)]
+    for i in range(gameset.DIM):
+        for j in range(gameset.DIM):
+            if tokens_weights[i][j] == 0:
+                r = cells_row(tokens_weights, i)
+                if len(set(r) - {0}) == 1:
+                    empty_weights[i][j] += int(sum(r)**2)
+                c = cells_column(tokens_weights, j)
+                if len(set(c) - {0}) == 1:
+                    empty_weights[i][j] += int(sum(c)**2)
+                md = cells_maindiagonal(tokens_weights, i, j)
+                if len(set(md) - {0}) == 1:
+                    empty_weights[i][j] += int(sum(md)**2)
+                ad = cells_antidiagonal(tokens_weights, i, j)
+                if len(set(ad) - {0}) == 1:
+                    empty_weights[i][j] += int(sum(ad)**2)
+    return empty_weights
 
 
 def weights_clear(empty_weights: config.Matrix) -> config.Matrix:
     """Обрабатывает матрицу принятия решения, приравнивая к нолю элементы, соответствующие занятым на поле клеткам."""
+    resolve_weights = [[0]*gameset.DIM for _ in range(gameset.DIM)]
+    for i in range(gameset.DIM):
+        for j in range(gameset.DIM):
+            if not game.BOARD[i][j]:
+                resolve_weights[i][j] = empty_weights[i][j]
+    return resolve_weights
 
 
 def calc_strategy_matrices() -> None:
