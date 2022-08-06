@@ -13,6 +13,12 @@ SAVES_INI_PATH = SCRIPT_DIR / "saves.ini"
 STATS = {}
 SAVES = {}
 
+# переменные типов для аннотации
+Row = list[str | int | float] | tuple[str | int | float, ...]
+Matrix = tuple[Row, ...] | list[Row]
+TurnCoords = tuple[int, int]
+Score = tuple[dict, dict]
+
 
 def read_ini() -> bool:
     """Читает конфигурационные файлы, сохраняет прочитанные данные в глобальные переменные статистики и сохранений и возвращает True если приложение запущено впервые, иначе False."""

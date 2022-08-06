@@ -9,14 +9,8 @@ import gameset
 # глобальные переменные модуля game
 BOARD = [[''] * gameset.DIM for _ in range(gameset.DIM)]
 
-# переменные типов для аннотации
-Row = list[str | int | float] | tuple[str | int | float, ...]
-Matrix = tuple[Row, ...] | list[Row]
-TurnCoords = tuple[int, int]
-Score = tuple[dict, dict]
 
-
-def print_board(board: Matrix, *boards: Matrix, right: bool = False) -> None:
+def print_board(board: config.Matrix, *boards: config.Matrix, right: bool = False) -> None:
     """Выводит в stdout игровое поле с ходами либо другими символами."""
     boards = (board, ) + boards
     num_of_boards = len(boards)
@@ -39,7 +33,7 @@ def human_turn():
     """Запрос координат ячейки поля для текущего хода."""
 
 
-def game(zero_turn=False) -> Score | None:
+def game(zero_turn=False) -> config.Score | None:
     """Обрабатывает игровой процесс."""
     # training = is_first_game()
     # for name in gameset.PLAYERS:
@@ -60,7 +54,7 @@ def game(zero_turn=False) -> Score | None:
     #         return -> ({}, {})
 
 
-def update_stats(score: Score) -> None:
+def update_stats(score: config.Score) -> None:
     """Обновляет глобальную переменную статистики в соответствии с результатом завершённой партии."""
     # for i in range(2):
     #     score[i] -> config.STATS[gameset.PLAYERS[i]]
