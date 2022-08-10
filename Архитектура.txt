@@ -159,6 +159,13 @@ show_help() -> None:
     """Выводит в stdout раздел помощи."""
 
 
+show_title(title: str, *,
+           padding_vertical: bool = False,
+           center: bool = True,
+           uppercase: bool = True) -> None:
+    """Выводит в stdout заголовок в рамке."""
+
+
 new_player(player_name: str) -> None:
     """Создаёт запись о новом игроке в глобальной переменной статистики."""
 
@@ -183,7 +190,10 @@ is_first_game() -> bool:
     """Проверяет является ли данная партия первой для любого из игроков."""
 
 
-print_board(board: config.Matrix, *boards: config.Matrix, right: bool = False) -> None:
+draw_boards(board: config.Matrix,
+            *boards: config.Matrix,
+            left_margin: int = 1,
+            right: bool = False) -> str:
     """Выводит в stdout игровое поле с ходами либо другими символами."""
 
 
