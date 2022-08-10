@@ -18,17 +18,23 @@ def draw_boards(board: config.Matrix,
     """Возвращает в строковом виде одно или несколько игровых полей, расположенных на одном уровне, заполненных на основе переданных аргументами матриц."""
     boards = (board, ) + boards
     num_of_boards = len(boards)
+    # для каждой матрицы вычисляет наибольшее количество символов в ячейке
     width_cells = tuple(max(max(len(str(cell)) for cell in row) for row in board) + 2
                         for board in boards)
+    # для каждой матрицы вычисляет количество символов, занимаемое всей матрицей в ширину
     width_boards = tuple(width_cells[i]*gameset.DIM + gameset.DIM - 1
                          for i in range(num_of_boards))
     pad = 5
     margin = (left_margin, gts()[0] - 1 - sum(width_boards) - pad * (num_of_boards - 1))[right]
+    # формирует строки со значениями и вертикальными разделителями
     value_lines = ()
     for i in gameset.RANGE:
+        # записывает в кортеж строки значений из каждой переданной матрицы
         values = ('|'.join(f"{cell!s:^{width_cells[j]}s}" for cell in boards[j][i])
                   for j in range(num_of_boards))
+        # формирует полную строку с отступами слева и между строками значений
         value_lines += (' '*margin + (' '*pad).join(values), )
+    # формирует строку с горизонтальными разделителями матриц и отступами слева и между ними
     horiz_line = ' '*margin + (' '*pad).join('—'*wd for wd in width_boards)
     return f'\n{horiz_line}\n'.join(value_lines)
 
