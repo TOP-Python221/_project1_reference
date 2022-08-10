@@ -36,6 +36,7 @@ H_INTERFACE = f"""Интерфейс
 \n{game.draw_boards(BOARD_COORDINATES, left_margin=6)}\n"""
 H_COMMANDS = (
     "Команды\n"
+    # формирует строку в виде таблицы, колонки разделяются двоеточиями, первая колонка выравнивается вправо, вторая колонка выравнивается влево, первая строка отделяется горизонтальной линией
     + ' '*(4 + (mx_com_len := max(len(k) for k in COMMANDS)) - len(a := 'действие'))
     + a.title() + ": 'команда 1', 'команда 2', ...\n  "
     + '—'*(4 + mx_com_len + max(len(str(v)) for v in COMMANDS.values())) + '\n'
@@ -48,6 +49,7 @@ H_COMMANDS = (
 
 def show_help() -> None:
     """Выводит в stdout раздел помощи."""
+    # из глобального пространства имён данного модуля получает все объекты, чьи имена начинаются на 'H_'
     for chapter in (obj for name, obj in globals().items() if name.startswith('H_')):
         title, message = (ch := chapter.split('\n', maxsplit=1))[0], ch[1]
         show_title(title, center=False)
@@ -61,6 +63,7 @@ def show_title(title: str, *,
     """Выводит в stdout заголовок в рамке."""
     terminal_width = gts()[0] - 1
     if center:
+        # отступы при центрировании для чётного и нечётного значений ширины окна терминала
         padding_left = ceil((terminal_width - len(title) - 2) / 2)
         padding_right = floor((terminal_width - len(title) - 2) / 2)
     else:
