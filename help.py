@@ -48,7 +48,10 @@ H_COMMANDS = (
 
 def show_help() -> None:
     """Выводит в stdout раздел помощи."""
-    print(HELP)
+    for chapter in (obj for name, obj in globals().items() if name.startswith('H_')):
+        title, message = (ch := chapter.split('\n', maxsplit=1))[0], ch[1]
+        show_title(title, center=False)
+        print(message)
 
 
 def show_title(title: str, *,
