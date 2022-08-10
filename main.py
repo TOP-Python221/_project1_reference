@@ -8,7 +8,7 @@ import gameset
 import game
 
 
-help.show_title(help.APP_TITLE)
+help.show_title(help.APP_TITLE, padding_vertical=True)
 
 # начало отработки Этапов работы приложения согласно Архитектуре
 
