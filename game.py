@@ -11,7 +11,7 @@ import ai
 BOARD = [[''] * gameset.DIM for _ in range(gameset.DIM)]
 
 
-def print_board(board: config.Matrix, *boards: config.Matrix, right: bool = False) -> None:
+def draw_boards(board: config.Matrix, *boards: config.Matrix, right: bool = False) -> None:
     """Выводит в stdout игровое поле с ходами либо другими символами."""
     boards = (board, ) + boards
     num_of_boards = len(boards)
