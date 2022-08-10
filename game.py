@@ -11,8 +11,11 @@ import ai
 BOARD = [[''] * gameset.DIM for _ in range(gameset.DIM)]
 
 
-def draw_boards(board: config.Matrix, *boards: config.Matrix, right: bool = False) -> None:
-    """Выводит в stdout игровое поле с ходами либо другими символами."""
+def draw_boards(board: config.Matrix,
+                *boards: config.Matrix,
+                left_margin: int = 1,
+                right: bool = False) -> str:
+    """Возвращает в строковом виде одно или несколько игровых полей, расположенных на одном уровне, заполненных на основе переданных аргументами матриц."""
     boards = (board, ) + boards
     num_of_boards = len(boards)
     width_cells = tuple(max(max(len(str(cell)) for cell in row) for row in board) + 2
@@ -20,14 +23,14 @@ def draw_boards(board: config.Matrix, *boards: config.Matrix, right: bool = Fals
     width_boards = tuple(width_cells[i]*gameset.DIM + gameset.DIM - 1
                          for i in range(num_of_boards))
     pad = 5
-    margin = (1, gts()[0]-1 - sum(width_boards) - pad*(num_of_boards-1))[right]
+    margin = (left_margin, gts()[0] - 1 - sum(width_boards) - pad * (num_of_boards - 1))[right]
     value_lines = ()
     for i in gameset.RANGE:
         values = ('|'.join(f"{cell!s:^{width_cells[j]}s}" for cell in boards[j][i])
                   for j in range(num_of_boards))
         value_lines += (' '*margin + (' '*pad).join(values), )
     horiz_line = ' '*margin + (' '*pad).join('—'*wd for wd in width_boards)
-    print(f'\n{horiz_line}\n'.join(value_lines))
+    return f'\n{horiz_line}\n'.join(value_lines)
 
 
 def human_turn():
